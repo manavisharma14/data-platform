@@ -8,6 +8,7 @@ engine = create_engine(
 
 MAX_RETRIES = 3
 
+
 def main():
     with engine.begin() as conn:
         failed_events = pd.read_sql(
