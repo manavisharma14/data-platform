@@ -15,6 +15,22 @@ services:
     volumes:
       - airflow_postgres_data:/var/lib/postgresql/data
 
+  airflow-init:
+
+    image: apache/airflow:2.9.2
+
+    container_name: airflow-init
+
+    depends_on:
+
+      - airflow-postgres
+
+    environment:
+
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+
+    command: airflow db init
+
   airflow-webserver:
     image: apache/airflow:2.9.2
 
