@@ -9,7 +9,6 @@ from rules import (
 
 from validator import Validator
 
-
 engine = create_engine(
     "postgresql://postgres:postgres@localhost:5433/genpact_etl"
 )
