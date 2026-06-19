@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 class PricePositiveRule:
 
     def validate(self, row):
