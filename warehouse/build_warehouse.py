@@ -17,9 +17,7 @@ df = pd.read_sql(
 
 print(f"Loaded {len(df):,} validated events")
 
-# -------------------------
 # DIM CATEGORIES
-# -------------------------
 
 dim_categories = (
     df[
@@ -39,9 +37,7 @@ print(
     f"Loaded {len(dim_categories):,} categories"
 )
 
-# -------------------------
 # DIM PRODUCTS
-# -------------------------
 
 dim_products = (
     df[
@@ -66,9 +62,7 @@ print(
     f"Loaded {len(dim_products):,} products"
 )
 
-# -------------------------
 # FACT EVENTS
-# -------------------------
 
 fact_events = (
     df[
