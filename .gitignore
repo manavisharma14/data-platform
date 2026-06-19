@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+
+.env
+
+data/rees46/*.csv
+
+.vscode/
+
+.airflow/
+
+logs/
+
+.DS_Store
