@@ -1,0 +1,48 @@
+services:
+
+  airflow-postgres:
+    image: postgres:16
+    container_name: airflow-postgres
+
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - airflow_postgres_data:/var/lib/postgresql/data
+
+  airflow-webserver:
+    image: apache/airflow:2.9.2
+
+    container_name: airflow-webserver
+
+    depends_on:
+      - airflow-postgres
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+
+    ports:
+      - "8080:8080"
+
+    command: webserver
+
+  airflow-scheduler:
+    image: apache/airflow:2.9.2
+
+    container_name: airflow-scheduler
+
+    depends_on:
+      - airflow-postgres
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+
+    command: scheduler
+
+volumes:
+  airflow_postgres_data:
