@@ -14,7 +14,6 @@ total_rows = 0
 for i, chunk in enumerate(
     pd.read_csv(csv_file, chunksize=CHUNK_SIZE)
 ):
-
     # Convert timestamp column
     chunk["event_time"] = pd.to_datetime(
         chunk["event_time"],
