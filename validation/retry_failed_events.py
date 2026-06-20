@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 
 engine = create_engine(
-    "postgresql://postgres:postgres@localhost:5433/genpact_etl"
+    "postgresql://postgres:postgres@genpact-postgres:5432/genpact_etl"
 )
 
 MAX_RETRIES = 3

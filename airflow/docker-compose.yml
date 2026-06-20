@@ -45,6 +45,9 @@ services:
     ports:
       - "8080:8080"
 
+    volumes:
+      - ../:/project
+
     command: webserver
 
   airflow-scheduler:
@@ -57,6 +60,9 @@ services:
 
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+
+    volumes: 
+      - ../:/project
 
     command: scheduler
 

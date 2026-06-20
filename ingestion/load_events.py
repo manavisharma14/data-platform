@@ -1,8 +1,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
-DB_URL = "postgresql://postgres:postgres@localhost:5433/genpact_etl"
-
+DB_URL = "postgresql://postgres:postgres@genpact-postgres:5432/genpact_etl"
 CHUNK_SIZE = 100_000
 
 engine = create_engine(DB_URL)

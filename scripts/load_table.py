@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 import sys
 
 engine = create_engine(
-    "postgresql://postgres:postgres@localhost:5433/genpact_etl"
+    "postgresql://postgres:postgres@genpact-postgres:5432/genpact_etl"
 )
 
 csv_file = sys.argv[1]
