@@ -1,91 +1,48 @@
-import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 engine = create_engine(
     "postgresql://postgres:postgres@genpact-postgres:5432/genpact_etl"
 )
 
-print("Loading validated events...")
+with engine.begin() as conn:
 
-df = pd.read_sql(
-    """
-    SELECT *
-    FROM valid_events
-    """,
-    engine
-)
+    # DIM CATEGORIES
+    conn.execute(text("""
+        DROP TABLE IF EXISTS dim_categories;
 
-print(f"Loaded {len(df):,} validated events")
+        CREATE TABLE dim_categories AS
+        SELECT DISTINCT
+            category_id,
+            category_code
+        FROM valid_events;
+    """))
 
-# DIM CATEGORIES
+    # DIM PRODUCTS
+    conn.execute(text("""
+        DROP TABLE IF EXISTS dim_products;
 
-dim_categories = (
-    df[
-        ["category_id", "category_code"]
-    ]
-    .drop_duplicates()
-)
+        CREATE TABLE dim_products AS
+        SELECT DISTINCT
+            product_id,
+            brand,
+            category_id,
+            category_code
+        FROM valid_events;
+    """))
 
-dim_categories.to_sql(
-    "dim_categories",
-    engine,
-    if_exists="replace",
-    index=False
-)
+    # FACT EVENTS
+    conn.execute(text("""
+        DROP TABLE IF EXISTS fact_events;
 
-print(
-    f"Loaded {len(dim_categories):,} categories"
-)
-
-# DIM PRODUCTS
-
-dim_products = (
-    df[
-        [
-            "product_id",
-            "brand",
-            "category_id",
-            "category_code"
-        ]
-    ]
-    .drop_duplicates()
-)
-
-dim_products.to_sql(
-    "dim_products",
-    engine,
-    if_exists="replace",
-    index=False
-)
-
-print(
-    f"Loaded {len(dim_products):,} products"
-)
-
-# FACT EVENTS
-
-fact_events = (
-    df[
-        [
-            "event_id",
-            "event_time",
-            "event_type",
-            "product_id",
-            "user_id",
-            "price"
-        ]
-    ]
-)
-
-fact_events.to_sql(
-    "fact_events",
-    engine,
-    if_exists="replace",
-    index=False
-)
-
-print(
-    f"Loaded {len(fact_events):,} fact events"
-)
+        CREATE TABLE fact_events AS
+        SELECT
+            event_id,
+            event_time,
+            event_type,
+            product_id,
+            user_id,
+            price
+        FROM valid_events;
+    """))
 
 print("Warehouse build complete")
