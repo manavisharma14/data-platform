@@ -29,7 +29,7 @@ dim_categories = (
 dim_categories.to_sql(
     "dim_categories",
     engine,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -54,7 +54,7 @@ dim_products = (
 dim_products.to_sql(
     "dim_products",
     engine,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -80,7 +80,7 @@ fact_events = (
 fact_events.to_sql(
     "fact_events",
     engine,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 

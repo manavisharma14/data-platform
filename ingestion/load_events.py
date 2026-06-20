@@ -6,7 +6,7 @@ CHUNK_SIZE = 100_000
 
 engine = create_engine(DB_URL)
 
-csv_file = "data/rees46/2019-Nov.csv"
+csv_file = "/project/data/rees46/2019-Nov.csv"
 
 total_rows = 0
 
