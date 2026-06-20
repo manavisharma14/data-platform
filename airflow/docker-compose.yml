@@ -47,6 +47,7 @@ services:
 
     volumes:
       - ../:/project
+      - ./dags:/opt/airflow/dags
 
     command: webserver
 
@@ -63,6 +64,7 @@ services:
 
     volumes: 
       - ../:/project
+      - ./dags:/opt/airflow/dags
 
     command: scheduler
 
