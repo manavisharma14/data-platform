@@ -20,9 +20,13 @@ validator = Validator([
 ])
 
 query = """
-SELECT *
-FROM raw_events
-LIMIT 100000
+SELECT r.*
+FROM raw_events r
+LEFT JOIN valid_events v
+    ON r.event_id = v.event_id
+WHERE v.event_id IS NULL
+ORDER BY r.event_id
+LIMIT 100000;
 """
 
 df = pd.read_sql(query, engine)
